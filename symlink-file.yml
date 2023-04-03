@@ -1,0 +1,20 @@
+---
+#ansible-playbook symlink-file.yml
+- name: ensure a file exists 
+  hosts: all
+  tasks:
+    - name: ensure a file exists
+      file:
+        path: $HOME/test_file
+        state: touch
+
+    - name: create symlink to test_file 
+      file:
+        src: $HOME/test_file
+        dest: $HOME/test_file_link
+        state: link 
+    
+    - name: remove symlink
+      file:
+        path: $HOME/test_file_link 
+        state: absent

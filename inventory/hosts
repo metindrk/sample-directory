@@ -1,0 +1,5 @@
+[redhat1]
+db_server ansible_host=172.31.90.163 
+
+[redhat2]
+web_server ansible_host=172.31.49.83

@@ -1,0 +1,13 @@
+---
+#ansible-playbook creating-more-direct.yml
+- name: run tasks on all hosts
+  hosts: all
+  tasks:
+    - name: creat multiple directories in a loop
+      file:
+        path: $HOME/{{ item }}
+        state: directory # absent  # to remove
+      loop: 
+        - test_directory1
+        - test_directory2
+        - test_directory3

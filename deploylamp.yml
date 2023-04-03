@@ -1,0 +1,41 @@
+---
+- name: Deploying LAMP Stack
+  hosts: db_server
+  become: yes
+  tasks:
+    - name: installing Apachi server
+      yum: name=httpd state=latest
+
+    - name: Start Apache server
+      ansible.builtin.yum: name=httpd state=latest
+      
+    - name: İnstalling MariaDB Server
+      yum:
+        name: 
+        - mariadb-server
+        - mariadb-devel
+        - mariadb-connectot-odbc
+        - mariadb-server-utils
+        - python3-PyMySQL
+        - php
+        state: latest
+
+    - name: start MariaDB Server Service
+      service: name=mariadb state=started
+
+    - name: Update MariaDB Server root password
+      mysql_user:
+        name: root
+        host: web_server
+        password: mtn
+        login_user: root
+        check_implicit_admin: yes
+        priv: "*.*:ALL,GRANT"
+
+    - name:Create a new database called 
+
+
+
+
+        state: started
+        enabled: true
