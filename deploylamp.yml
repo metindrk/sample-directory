@@ -7,17 +7,17 @@
       yum: name=httpd state=latest
 
     - name: Start Apache server
-      ansible.builtin.yum: name=httpd state=latest
+      service: name=httpd state=started
       
     - name: İnstalling MariaDB Server
-      yum:
+      ansible.builtin.yum:
         name: 
-        - mariadb-server
-        - mariadb-devel
-        - mariadb-connectot-odbc
-        - mariadb-server-utils
-        - python3-PyMySQL
-        - php
+          - mariadb-server
+          - mariadb-devel
+          - mariadb-connectot-odbc
+          - mariadb-server-utils
+          - python3-PyMySQL
+          - php
         state: latest
 
     - name: start MariaDB Server Service
@@ -32,10 +32,21 @@
         check_implicit_admin: yes
         priv: "*.*:ALL,GRANT"
 
-    - name:Create a new database called 
+    - name: Create a new database called İnventory
+      mysql_db: name=inventory state=present login_user=root login_password=mtn
 
+    - name: copy SQL file 
+      copy: src=/source/servers.sql dest=~/tmp/
 
+    - name: Crate Table called servers with data 
+      shell: mysql -u root -pmtn inventory < /tmp/servers.sql
 
+    - name: copy PHP files
+      copy: src=/source/connection.php dest=/var/www/html/
 
-        state: started
-        enabled: true
+    - name: copy index.php file
+      copy: src=/source/index.php dest=/var/www/html/
+
+    - name: Restart web service
+      service: name=httpd state=restarted
+...
