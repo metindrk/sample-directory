@@ -1,0 +1,26 @@
+---
+- hosts: web_server
+  user: ansible
+  become: True
+  tasks:
+   - name: Update DNF Package repository cache
+     dnf:
+        update_cache: True
+   - name: Install MySQL server on CentOS 8  
+     dnf:
+        name: mysql-server
+        state: absent
+   - name: Install MySQL client on CentOS 8
+     dnf:
+        name: mysql
+        state: absent
+   - name: Make sure mysqld service is running
+     service:
+        name: mysqld
+        state: stopped
+        enabled: True
+
+   - name: Install python3-PyMySQL library
+     dnf:
+        name: python3-PyMySQL
+        state: absent
