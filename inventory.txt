@@ -1,0 +1,4 @@
+[servers]
+db_server ansible_host=172.31.90.163 ansible_user=ec2-user
+web_server ansible_host=172.31.49.83 ansible_user=ec2-user
+
